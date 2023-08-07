@@ -16,6 +16,7 @@ import com.example.algamoneyapi.model.Categoria;
 import com.example.algamoneyapi.repository.CategoriaRepository;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,7 +39,8 @@ public class CategoriaResource {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> createCategoria(@RequestBody Categoria entity, HttpServletResponse response) {
+    public ResponseEntity<Categoria> createCategoria(@Valid @RequestBody Categoria entity,
+            HttpServletResponse response) {
         Categoria categoria = repository.save(entity);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
