@@ -36,9 +36,9 @@ public class CategoriaResource {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> createCategoria(@Valid @RequestBody Categoria categoria,
+    public ResponseEntity<Categoria> createCategoria(@Valid @RequestBody Categoria entity,
             HttpServletResponse response) {
-        return categoriaService.create(categoria, response);
+        return categoriaService.create(entity, response);
     }
 
 }
