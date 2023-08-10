@@ -1,9 +1,12 @@
-# Usar a imagem oficial do OpenJDK 19
-FROM openjdk:19-jdk-slim
+FROM maven:3.8.7-openjdk-18 AS builder
 
-# Copiar o arquivo jar da sua aplicação para o container
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Comando para executar a aplicação
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM openjdk:18-jdk-slim AS runner
+
+WORKDIR /app
+COPY --from=builder /app/target/*.jar app.jar
+
+CMD ["java", "-jar", "app.jar"]

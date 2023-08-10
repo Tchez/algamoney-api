@@ -9,9 +9,8 @@ services:
       - "8080:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/algamoneydb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=rootpassword
+      - SPRING_DATASOURCE_USERNAME=appuser
+      - SPRING_DATASOURCE_PASSWORD=apppassword
     restart: on-failure
     depends_on:
       mysql:
@@ -22,6 +21,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: algamoneydb
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppassword
     ports:
       - "3305:3306"
     volumes:
