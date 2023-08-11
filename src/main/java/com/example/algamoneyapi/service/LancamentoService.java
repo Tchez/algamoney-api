@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.algamoneyapi.event.RecursoCriadoEvent;
 import com.example.algamoneyapi.model.Lancamento;
+import com.example.algamoneyapi.model.Pessoa;
 import com.example.algamoneyapi.repository.LancamentoRepository;
+import com.example.algamoneyapi.service.exception.PessoaInativaException;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -25,6 +27,9 @@ public class LancamentoService {
     @Autowired
     private ApplicationEventPublisher publisher;
 
+    @Autowired
+    private PessoaService pessoaService;
+
     public List<Lancamento> getList() {
         return repository.findAll();
     }
@@ -35,6 +40,11 @@ public class LancamentoService {
     }
 
     public ResponseEntity<Lancamento> create(Lancamento entity, HttpServletResponse response) {
+        Pessoa pessoa = pessoaService.findPessoaById(entity.getPessoa().getId());
+        if (pessoa == null || pessoa.isInativo()) {
+            throw new PessoaInativaException();
+        }
+
         Lancamento lancamento = repository.save(entity);
 
         publisher.publishEvent(new RecursoCriadoEvent(this, response, lancamento.getId()));

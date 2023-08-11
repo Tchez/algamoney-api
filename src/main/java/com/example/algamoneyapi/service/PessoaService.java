@@ -61,7 +61,7 @@ public class PessoaService {
         repository.save(pessoa);
     }
 
-    private Pessoa findPessoaById(Long id) {
+    public Pessoa findPessoaById(Long id) {
         Optional<Pessoa> pessoa = repository.findById(id);
 
         if (!pessoa.isPresent()) {
