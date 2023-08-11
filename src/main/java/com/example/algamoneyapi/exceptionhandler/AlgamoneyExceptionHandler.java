@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.flywaydb.core.internal.util.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -63,7 +64,7 @@ public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler {
             WebRequest request) {
         String mensagemUsuario = messageSource.getMessage("recurso.operacao-nao-permitida", null,
                 LocaleContextHolder.getLocale());
-        String mensagemDev = ex.toString();
+        String mensagemDev = ExceptionUtils.getRootCause(ex).toString();
         List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDev));
 
         return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
