@@ -1,10 +1,11 @@
 # Configurações do banco de dados
+spring.jpa.database=MYSQL
 spring.datasource.url=jdbc:mysql://mysql:3306/algamoneydb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
 spring.datasource.username=appuser
 spring.datasource.password=apppassword
 
-# Configurando para o Hibernate criar as tabelas automaticamente no banco de dados
 spring.jpa.show-sql=true
 
-# Adicionando falha na serialização de propriedades desconhecidas
-spring.jackson.deserialization.fail-on-unknown-properties=true
+spring.jackson.deserialization.fail-on-ignored-properties=true
+
+spring.jackson.date-format=yyyy-MM-dd
